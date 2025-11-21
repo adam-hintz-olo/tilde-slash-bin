@@ -1,1 +1,12 @@
-git grep -I --line-number --color=always "$@"
+#!/usr/bin/env zsh
+
+# A zsh implementation of "smart casing" for search
+# If your string is all lowercased, search case-insensitive
+# Otherwise, search case-sensitive
+QUERY="$@"
+LOWERCASED="${QUERY:l}"
+CASE_INSENSITIVE_PARAM=""
+if [[ "$QUERY" == "$LOWERCASED" ]]; then
+    CASE_INSENSITIVE_PARAM="-i"
+fi
+git grep -I $CASE_INSENSITIVE_PARAM --line-number --color=always "$@"

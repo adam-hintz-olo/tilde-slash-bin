@@ -6,6 +6,8 @@
 # location of gvim
 GVIM_DEFAULT='C:\Program Files\Vim\vim91\gvim.exe'
 GVIM=${GVIM:-$GVIM_DEFAULT}
+WSL_NAME_DEFAULT='Ubuntu-24.04'
+WSL_NAME=${WSL_NAME:-$WSL_NAME_DEFAULT}
 
 if [[ $# == 0 ]]; then
     pwsh.exe -Command "Start '$GVIM'"
@@ -20,12 +22,12 @@ else
             exit 1
         fi
     fi
-    if [[ $FILE == /mnt/c/* ]]; then
-        FILE=${FILE/\/mnt\/c\//C:\\}
+    if [[ "$FILE" == /mnt/c/* ]]; then
+        FILE="${FILE/\/mnt\/c\//C:\\}"
     else
         # replace the first forward slash
         # TODO figure out how to name current WSL repo
-        FILE=${FILE/\//\\\\wsl\$\\Ubuntu-20.04\\}
+        FILE="${FILE/\//\\\\wsl\$\\$WSL_NAME\\}"
     fi
 
     # replace the rest
